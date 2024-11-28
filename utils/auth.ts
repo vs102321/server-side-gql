@@ -71,7 +71,9 @@ export const signup = async ({
   email: string
   password: string
 }) => {
+  
   const hashedPW = await hashPW(password)
+  
   const rows = await db
     .insert(users)
     .values({ email, password: hashedPW })
@@ -80,8 +82,9 @@ export const signup = async ({
       email: users.email,
       createdAt: users.createdAt,
     })
-
+    
   const user = rows[0]
+ 
   const token = createTokenForUser(user.id)
 
   return { user, token }
