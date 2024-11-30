@@ -29,6 +29,7 @@ export const schema = `#graphql
     email: String!
     createdAt: String!
     token: String
+    issues: [Issue]! # add issues field
   }
 
   input AuthInput {
@@ -36,13 +37,32 @@ export const schema = `#graphql
     password: String!
   }
 
+  input IssuesFilterInput {
+    statuses: [IssueStatus]
+  }
+
+  input EditIssueInput {
+    name: String
+    content: String
+    status: IssueStatus
+    id: ID!
+  }
+
+  input DeleteIssueInput {
+    id: ID!
+  }
+
   type Query {
     me: User
+    issues(input: IssuesFilterInput): [Issue]! # add issues query
+    users: [User]! # add issues query
   }
 
   type Mutation {
     signin(input: AuthInput!): User
     createUser(input: AuthInput!): User
     createIssue(input: CreateIssueInput!): Issue
+    editIssue(input: EditIssueInput!): Issue!
+    deleteIssue(input: DeleteIssueInput!): Issue!
   }
 `
